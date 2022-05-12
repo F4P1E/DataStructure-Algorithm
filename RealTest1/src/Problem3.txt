@@ -1,0 +1,55 @@
+int equalPairs(int[] A)
+  res = 0
+  for i from 0 to A.length - 1
+    for j from i + 1 to A.length - 1
+      if (A[i] == A[j]) res++
+  return res
+
+The number in curly braces on the right of each line is the execution times (N is the array size)
+
+int equalPairs(int[] A)
+  res = 0                                 {1}
+  for i from 0 to A.length - 1            {N + 1}
+    for j from i + 1 to A.length - 1      {Sum(N - i) with i: 0 to N-1}
+      if (A[i] == A[j]) res++             {Sum(N - i) with i: 0 to N-1}
+  return res                              {1}
+
+Total execution times:
+{1} + {N + 1} + {1 + 2 + ... + N} + {1 + 2 + ... + N} + {1} =
+3 + N + N * (N - 1) / 2 + N * (N - 1) / 2 =
+3 + N + N ^ 2 - N
+
+Ignore the constants and less significant factors, we have the big-O of above algorithm is O(N^2)
+
+===========
+
+One possible proposal
+
+int equalPairs(int[] A)
+  res = 0
+  left = 0
+  N = A.length
+  while (left < N)
+    right = left + 1
+    while (right < N && A[right] == A[left])
+      right++
+      // when the inner loop stops, right is the index of the first
+      // element whose value != A[left]. All elements from left to (right - 1)
+      // are equal. The number of such equal elements is (right - left)
+    count = right - left
+    // each element of count can be paired with (count - 1) other elements
+    // so, the total pairs are: count * (count - 1)
+    // we need to divide by 2 because there is no order between 2 elements in a pair
+    res += count * (count - 1) / 2
+    // continue
+    left = right
+  return res
+
+The above algorithm contains a nested loop. However, the index of the outer loop
+(left) and the index of the inner loop (right) are dependent. If the inner loop
+index increase X units, the next iteration of the outer loop starts from
+(previous left + X). This is an example of the 2 pointers technique. For any
+element in the array, it can be accessed at most twice (once by left and once by right).
+Some elements are accessed by just left or right. Thus, the complexity of the above algorithm
+is 2N. Ignore the constants and less significant factors,
+we have the big-O of above algorithm is O(N)

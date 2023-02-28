@@ -1,0 +1,46 @@
+//Data Structure and Algorithms
+//Date Create: 14/01/2023
+//Student: Duong Phu Dong (s3836528)
+
+
+maxOne = N      => {1}
+maxTwo = N/2    => {1}
+maxFive = N/5   => {1}
+ALL = []        => {1}
+for i = 0 to maxOne - 1 => {1}
+  ALL.append(1)     =>{N}
+for i = 0 to maxTwo - 1  => {1}
+  ALL.append(2) => {N/2}
+for i = 0 to maxFive - 1 => {N/5}
+  ALL.append(5) => {1}
+// the above code creates an array of
+// N number 1, N/2 number 2, and N/5 number 5
+answer = [] => {1}
+min = MAX_POSITIVE  => {1}
+for each subset SUB of array ALL  // try all subsets    =>{2 ^ (N + N/2 + N/5}
+  if (sum of elements in SUB == N)  // a valid solution? =>{1}
+    if (length of SUB < min)  // better than the current solution? =>{1}
+      min = length of SUB => {1}
+      answer = SUB => {1}
+return answer => {1}
+
+=> The asymptotic complexity of the above algorithm is O(2^N)
+Because it keeps the most significant element and remove the constants, it is 2^N
+
+
+//efficient algorithm for this problem
+//PSEUDOCODE FOR THIS PROBLEM
+int numberOfCoin5 = N/5
+int numberOfCoin2 = (N%5) / 2
+int numberOfCoin1 = (N%5%2) / 1
+
+answer = []
+for i = 0 to numberOfCoin5 - 1:
+        answer.append(5)
+
+for i = 0 to numberOfCoin2 - 1:
+        answer.append(2)
+
+for i = 0 to numberOfCoin1 - 1:
+        answer.append(1)
+return answer
